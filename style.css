@@ -296,3 +296,19 @@ body {
         padding: 1rem 0.5rem;
     }
 }
+
+/* Mobile Detail Card Alignment Fix */
+@media (max-width: 640px) {
+    .dog-detail-card, .modal-content, .card-details {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    /* Force detail rows to stack label on top of value or align cleanly */
+    .detail-row, .trait-row, p strong {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
