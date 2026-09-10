@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <h1></h1>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dogtionary - 20 Dog Breeds</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+   
+ <style>
+    
+    :root {
+      --primary: #10b981;
+      --bg-dark: #0f172a;
+      --bg-card: #1e293b;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #334155;
+      --accent: #38bdf8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header & Navigation */
+    .navbar {
+      background: rgba(15, 23, 42, 0.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 16px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .logo {
+      font-size: 1.6rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #10b981, #38bdf8);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .search-box input {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 10px 18px;
+      border-radius: 99px;
+      width: 280px;
+      outline: none;
+      transition: border-color 0.2s ease;
+    }
+
+    .search-box input:focus {
+      border-color: var(--primary);
+    }
+
+    /* Container & Layout */
+    .container {
+      max-width: 1280px;
+      margin: 32px auto;
+      padding: 0 24px;
+      width: 100%;
+    }
+
+    .header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 32px;
+    }
+
+    #breedCount {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    /* Card Grid */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 24px;
+    }
+
+    .breed-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .breed-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--primary);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+    }
+
+    .img-wrapper {
+      height: 200px;
+      background: #000;
+      overflow: hidden;
+    }
+
+    .breed-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .breed-card:hover img {
+      transform: scale(1.05);
+    }
+
+    .card-body {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .card-body h3 {
+      font-size: 1.15rem;
+      margin-bottom: 8px;
+    }
+
+    .card-body p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 20px;
+      flex-grow: 1;
+    }
+
+    .profile-btn {
+      background: transparent;
+      border: 1px solid var(--primary);
+      color: var(--primary);
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      width: 100%;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    .breed-card:hover .profile-btn {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    /* Modal Popup */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      width: 100%;
+      max-width: 500px;
+      border-radius: 20px;
+      padding: 24px;
+      position: relative;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 16px;
+      right: 20px;
+      font-size: 1.8rem;
+      border: none;
+      background: none;
+      cursor: pointer;
+      color: var(--text-muted);
+    }
+
+    .modal-close:hover {
+      color: var(--text-main);
+    }
+
+    .modal-img {
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 16px;
+    }
+
+    .modal-details-list {
+      margin-top: 16px;
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .modal-details-list li {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+      font-size: 0.9rem;
+    }
+
+    .modal-details-list span:first-child {
+      color: var(--text-muted);
+    }
+
+    .modal-details-list span:last-child {
+      font-weight: 600;
+      color: var(--accent);
+    }
+  </style>
+</head>
+<body>
+
+  <header class="navbar">
+    <h1 class="logo">Dogtionary</h1>
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Search breed, trait, or origin...">
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="header-bar">
+      <h2>Explore Breeds</h2>
+      <span id="breedCount">Showing 0 breeds</span>
+    </div>
+    <div class="card-grid" id="dogGrid"></div>
+  </main>
+
+  <div id="dogModal" class="modal">
+    <div class="modal-card">
+      <button class="modal-close" id="closeModal">&times;</button>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <script>
+    const dogsData = [
+      {
+        name: "Chihuahua",
+        description: "Graceful, alert, and swift tiny dogs with huge personalities.",
+        image: "https://yumove.co.uk/cdn/shop/files/Chihuahua.jpg?v=1749566503",
+        origin: "Mexico",
+        lifespan: "12 - 20 years",
+        temperament: "Charming, Graceful, Sassy, Devoted",
+        weight: "1.5 - 3 kg"
+      },
+      {
+        name: "Border Collie",
+        description: "Remarkably smart, athletic, and driven herding dogs with endless stamina.",
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRW1ti-03WgknmZT1cQTLHjaL_H01Kiq89NmwjLikwIN_VURMxejsznlpiR&s=10",
+        origin: "United Kingdom",
+        lifespan: "12 - 15 years",
+        temperament: "Tenacious, Keen, Energetic, Responsive",
+        weight: "14 - 20 kg"
+      },
+      {
+        name: "Akita",
+        description: "Large, powerful, and dignified mountain guard dogs from Japan.",
+        image: "https://ask.woodgreen.org.uk/media/pages/images/294b38512e-1737560639/japanese-akita-inu-1200x1200-crop.webp",
+        origin: "Japan",
+        lifespan: "10 - 14 years",
+        temperament: "Courageous, Dignified, Devoted, Alert",
+        weight: "32 - 59 kg"
+      },
+      {
+        name: "Maltese",
+        description: "Gentle, fearless, and affectionate toy dogs with silky white coats.",
+        image: "https://premierpups.com/azure/premierphotos/pups/5-facts-about-the-maltese-dog-we-guarantee-youll-love-637872600356578531.jpg?maxwidth=600&maxheight=400",
+        origin: "Mediterranean Area",
+        lifespan: "12 - 15 years",
+        temperament: "Playful, Easygoing, Gentle, Lively",
+        weight: "2 - 4 kg"
+      },
+      {
+        name: "Bernese Mountain Dog",
+        description: "Large, sturdy working dogs with a striking tri-color coat and gentle nature.",
+        image: "https://www.thesprucepets.com/thmb/bFADttb_L-7aYW4A7IX0qGVQmC4=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/spruce-pets-bernese-mountain-dog-profile-1e15ba047a5e40328e0683788993b247.png",
+        origin: "Switzerland",
+        lifespan: "7 - 10 years",
+        temperament: "Affectionate, Intelligent, Faithful, Calm",
+        weight: "35 - 55 kg"
+      },
+      {
+        name: "Basset Hound",
+        description: "Easygoing scent hounds known for long droopy ears and short stature.",
+        image: "https://cdn.britannica.com/87/236687-050-DD7F62CC/basset-hound-dog.jpg",
+        origin: "France",
+        lifespan: "12 - 13 years",
+        temperament: "Patient, Low-Key, Tenacious, Friendly",
+        weight: "20 - 29 kg"
+      },
+      {
+        name: "French Bulldog",
+        description: "Affectionate, quiet, and adaptable companion dogs with bat-like ears.",
+        image: "https://pet-health-content-media.chewy.com/wp-content/uploads/2025/08/22013627/french-bulldog.jpeg",
+        origin: "France",
+        lifespan: "10 - 12 years",
+        temperament: "Playful, Adaptable, Smart, Affectionate",
+        weight: "8 - 14 kg"
+      },
+      {
+        name: "German Shepherd",
+        description: "Versatile, noble, and highly intelligent working and service dogs.",
+        image: "https://images.unsplash.com/photo-1589941013453-ec89f33b5e95?auto=format&fit=crop&w=600&q=80",
+        origin: "Germany",
+        lifespan: "7 - 10 years",
+        temperament: "Confident, Courageous, Smart, Loyal",
+        weight: "30 - 40 kg"
+      },
+      {
+        name: "Golden Retriever",
+        description: "Friendly, devoted, and intelligent hunting retrievers with golden coats.",
+        image: "https://images.unsplash.com/photo-1633722715463-d30f4f325e24?auto=format&fit=crop&w=600&q=80",
+        origin: "United Kingdom",
+        lifespan: "10 - 12 years",
+        temperament: "Intelligent, Friendly, Devoted, Gentle",
+        weight: "25 - 34 kg"
+      },
+      {
+        name: "Siberian Husky",
+        description: "High-energy endurance sled dogs famous for striking eyes and thick coats.",
+        image: "https://images.unsplash.com/photo-1605568427561-40dd23c2acea?auto=format&fit=crop&w=600&q=80",
+        origin: "Russia",
+        lifespan: "12 - 14 years",
+        temperament: "Outgoing, Mischievous, Loyal, Alert",
+        weight: "16 - 27 kg"
+      },
+      {
+        name: "Boxer",
+        description: "Playful, energetic, and protective working dogs with smooth muscle builds.",
+        image: "https://cdn.britannica.com/38/285338-050-5371837F/Boxer-dog-outdoor.jpg",
+        origin: "Germany",
+        lifespan: "10 - 12 years",
+        temperament: "Fun-Loving, Bright, Active, Devoted",
+        weight: "25 - 32 kg"
+      },
+      {
+        name: "Rottweiler",
+        description: "Robust, confident guardians with powerful builds and loyal dispositions.",
+        image: "https://images.unsplash.com/photo-1567752881298-894bb81f9379?auto=format&fit=crop&w=600&q=80",
+        origin: "Germany",
+        lifespan: "9 - 10 years",
+        temperament: "Loyal, Loving, Confident Guard",
+        weight: "35 - 60 kg"
+      },
+      {
+        name: "Dachshund",
+        description: "Iconic long-bodied, short-legged hounds bred for keen scent tracking.",
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJjMCpCcqsDiyBi2FzLi_8eP4Z96T0GKEEP4xW6uUqbDDy9rHZ0DgKAEQ&s=10",
+        origin: "Germany",
+        lifespan: "12 - 16 years",
+        temperament: "Clever, Stubborn, Devoted, Lively",
+        weight: "7 - 14 kg"
+      },
+      {
+        name: "Chow Chow",
+        description: "The Chow Chow is a distinctive, ancient breed from northern China, easily recognized by its powerful, lion-like appearance and its unique blue-black tongue.",
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsqGm1AS-wbwXfWn4Sq_ms7PmXhXc6CwmajDwOgyavXEoMiRDditf2rcPQ&s=10",
+        origin: "China",
+        lifespan: "8 - 15 years",
+        temperament: "dignified, aloof, and fiercely independent",
+        weight: "20 - 32 kg"
+      },
+      {
+        name: "Pug",
+        description: "Charming toy dogs with wrinkled faces, curled tails, and loving natures.",
+        image: "https://images.unsplash.com/photo-1517423440428-a5a00ad493e8?auto=format&fit=crop&w=600&q=80",
+        origin: "China",
+        lifespan: "13 - 15 years",
+        temperament: "Charming, Mischievous, Loving, Docile",
+        weight: "6 - 8 kg"
+      },
+      {
+        name: "Great Dane",
+        description: "Majestic, giant-sized companions renowned for patience and soft temperaments.",
+        image: "https://www.borrowmydoggy.com/_next/image?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2F4ij0poqn%2Fproduction%2F49c7e14469d4efb59b255ae111b7668c618ae6d4-800x600.jpg&w=1080&q=80",
+        origin: "Germany",
+        lifespan: "7 - 10 years",
+        temperament: "Friendly, Patient, Dependable, Gentle",
+        weight: "50 - 90 kg"
+      },
+      {
+        name: "Standard Poodle",
+        description: "Highly athletic, proud, and exceptionally smart curly-coated working dogs.",
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXt3vb6C7ZuB9R-pZxGL2G92PHxJX61PdWpWeiPOek5I6xk1nxROZd_lw&s=10",
+        origin: "France / Germany",
+        lifespan: "12 - 15 years",
+        temperament: "Active, Proud, Very Smart, Trainable",
+        weight: "20 - 32 kg"
+      },
+      {
+        name: "Doberman Pinscher",
+        description: "Sleek, powerful guardians admired for keen intelligence and alertness.",
+        image: "https://headsupfortails.com/cdn/shop/articles/Doberman_Pinscher_Dog_Breed_Information_2a31ffd8-3d3f-4dc2-b495-fbc47dd27ef3.jpg?v=1741084702",
+        origin: "Germany",
+        lifespan: "10 - 12 years",
+        temperament: "Fearless, Energetic, Alert, Obedient",
+        weight: "32 - 45 kg"
+      },
+      {
+        name: "Shih Tzu",
+        description: "Affectionate, coat-rich lapdogs bred specifically for royal companionship.",
+        image: "https://assets.orvis.com/is/image/orvisprd/shih_tzu?wid=1023&src=is($object$:7-3)&qlt=85&resMode=sharp2&op_usm=1.75,0.3,2,0",
+        origin: "China / Tibet",
+        lifespan: "10 - 16 years",
+        temperament: "Affectionate, Playful, Outgoing, Gentle",
+        weight: "4 - 7.5 kg"
+      },
+      {
+        name: "Samoyed",
+        description: "Graceful Arctic sled dogs known for dense white coats and smiling faces.",
+        image: "https://pet-health-content-media.chewy.com/wp-content/uploads/2024/09/11171226/202106iStock-181956647-scaled-1.jpg",
+        origin: "Russia",
+        lifespan: "12 - 14 years",
+        temperament: "Friendly, Gentle, Adaptable, Alert",
+        weight: "20 - 30 kg"
+      }
+      
+    ];
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const dogGrid = document.getElementById('dogGrid');
+      const searchInput = document.getElementById('searchInput');
+      const dogModal = document.getElementById('dogModal');
+      const modalContent = document.getElementById('modalContent');
+      const closeModal = document.getElementById('closeModal');
+      const breedCount = document.getElementById('breedCount');
+
+      function renderCards(dogs) {
+        if (!dogGrid) return;
+        dogGrid.innerHTML = '';
+        if (breedCount) breedCount.textContent = `Showing ${dogs.length} breeds`;
+
+        dogs.forEach((dog) => {
+          const card = document.createElement('div');
+          card.className = 'breed-card';
+          card.innerHTML = `
+            <div class="img-wrapper">
+              <img src="${dog.image}" alt="${dog.name}" loading="lazy">
+            </div>
+            <div class="card-body">
+              <h3>${dog.name}</h3>
+              <p>${dog.description}</p>
+              <button type="button" class="profile-btn">View Details</button>
+            </div>
+          `;
+
+          card.addEventListener('click', () => {
+            if (!modalContent || !dogModal) return;
+            modalContent.innerHTML = `
+              <img src="${dog.image}" class="modal-img" alt="${dog.name}">
+              <h2>${dog.name}</h2>
+              <p style="margin: 8px 0; color: var(--text-muted);">${dog.description}</p>
+              <ul class="modal-details-list">
+                <li><span>Origin</span><span>${dog.origin}</span></li>
+                <li><span>Lifespan</span><span>${dog.lifespan}</span></li>
+                <li><span>Temperament</span><span>${dog.temperament}</span></li>
+                <li><span>Weight</span><span>${dog.weight}</span></li>
+              </ul>
+            `;
+            dogModal.classList.add('active');
+          });
+
+          dogGrid.appendChild(card);
+        });
+      }
+
+      if (closeModal && dogModal) {
+        closeModal.addEventListener('click', () => dogModal.classList.remove('active'));
+        window.addEventListener('click', (e) => {
+          if (e.target === dogModal) dogModal.classList.remove('active');
+        });
+      }
+
+      if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+          const term = e.target.value.toLowerCase().trim();
+          const filtered = dogsData.filter(d => 
+            d.name.toLowerCase().includes(term) || 
+            d.temperament.toLowerCase().includes(term) ||
+            d.origin.toLowerCase().includes(term)
+          );
+          renderCards(filtered);
+        });
+      }
+
+      renderCards(dogsData);
+    });
+  </script>
+</body>
+</html>
+<footer class="site-footer">
+  <p>Dogtionary &copy; 2026</p>
+  <p class="credit">Created by Miles Derek A. Querubin</p>
+</footer>
