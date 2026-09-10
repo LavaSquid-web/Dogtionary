@@ -312,3 +312,19 @@ body {
         align-items: flex-start;
     }
 }
+
+/* Clean Mobile Detail Row Stack */
+@media (max-width: 640px) {
+    /* Target the rows inside your detail card */
+    .detail-row, div[class*="detail"], p {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 0.25rem !important;
+    }
+    
+    /* Ensure text aligns neatly and doesn't bunch up */
+    .detail-row span, .detail-row strong {
+        width: 100% !important;
+    }
+}
