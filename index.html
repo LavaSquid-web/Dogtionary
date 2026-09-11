@@ -6,16 +6,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dogtionary - 20 Dog Breeds</title>
   <link rel="stylesheet" href="style.css">
-   <input type="text" id="searchInput" placeholder="Search breed, trait, or origin..." autocomplete="off">
+  
  <style>
     
     :root {
-      --primary: #10b981;
-      --bg-dark: #0f172a;
-      --bg-card: #1e293b;
+      --primary: #50c70c;
+      --bg-dark: #26802d;
+      --bg-card: #163822;
       --text-main: #f8fafc;
       --text-muted: #94a3b8;
-      --border: #334155;
+      --border: #50c70c;
       --accent: #38f872;
     }
 
@@ -36,7 +36,7 @@
 
     /* Header & Navigation */
     .navbar {
-      background: rgba(15, 23, 42, 0.9);
+      background: rgba(0, 46, 3, 0.9);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
       position: sticky;
@@ -53,7 +53,7 @@
     .logo {
       font-size: 1.6rem;
       font-weight: 700;
-      background: linear-gradient(135deg, #10b981, #38bdf8);
+      background: linear-gradient(135deg, #10b981, #5cb30c);
       -webkit-background-clip: text;
       background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -262,13 +262,23 @@
   </header>
 
   <main class="container">
-    <div class="header-bar">
-      <h2>Explore Breeds</h2>
-      <span id="breedCount">Showing 0 breeds</span>
+   <div class="main-content-wrapper">
+    <div class="section-header">
+        <h2>Explore Breeds</h2>
+        <span id="breedCount">Showing 1 breeds</span>
     </div>
-    <div class="card-grid" id="dogGrid"></div>
-  </main>
 
+    <!-- Your dog grid container -->
+    <div class="dog-grid" id="dogGrid">
+        <!-- Cards injected dynamically -->
+    </div>
+
+    <!-- Footer moved inside so it stays with the content flow -->
+    <footer style="text-align: center; padding: 2rem; color: var(--text-muted); font-size: 0.9rem;">
+        Dogtionary &copy; 2026<br>
+        Created by Miles Derek A. Querubin
+    </footer>
+</div>
   <div id="dogModal" class="modal">
     <div class="modal-card">
       <button class="modal-close" id="closeModal">&times;</button>
