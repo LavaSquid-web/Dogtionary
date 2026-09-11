@@ -365,7 +365,7 @@ body {
     .dog-detail-card, .modal-content, .card-details, div[class*="detail"] {
         display: flex !important;
         flex-direction: column !important;
-        align-items: flex-start !important;
+       align-items: flex-start !important;
         gap: 0.5rem !important;
         width: 100% !important;
     }
