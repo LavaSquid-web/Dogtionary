@@ -1,12 +1,11 @@
 :root {
-    ---bg-primary: #0d2516;    /* Deep dark forest green background */
-    --bg-card: #163822;       /* Rich green-tinted card background */
-    --text-main: #f8fafc;     /* Crisp white text */
-    --text-muted: #94a3b8;    /* Soft gray for subtitles */
-    --accent-color: #34d399;  /* Vibrant mint green accent */
+    --bg-primary: #0d2516;
+    --bg-card: #163822;
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --accent-color: #34d399;
 }
 
-/* Base Styles */
 body {
     background-color: var(--bg-primary) !important;
     color: var(--text-main) !important;
@@ -16,7 +15,6 @@ body {
     box-sizing: border-box;
 }
 
-/* Header & Navigation */
 header, .navbar {
     display: flex;
     justify-content: space-between;
@@ -32,7 +30,6 @@ h1, .logo-title {
     margin: 0;
 }
 
-/* Search Bar Styling */
 .search-container {
     padding: 0 2rem 1.5rem 2rem;
     max-width: 600px;
@@ -58,7 +55,6 @@ input[type="text"]:focus {
     border-color: var(--accent-color) !important;
 }
 
-/* Section Headings */
 .section-header {
     display: flex;
     justify-content: space-between;
@@ -78,7 +74,6 @@ input[type="text"]:focus {
     font-size: 0.95rem;
 }
 
-/* Card Styling */
 .dog-card {
     background-color: var(--bg-card) !important;
     border: 1px solid rgba(52, 211, 153, 0.15);
@@ -122,7 +117,6 @@ input[type="text"]:focus {
     line-height: 1.4;
 }
 
-/* Action Buttons */
 .btn-details, button {
     background-color: transparent;
     color: var(--accent-color);
@@ -141,7 +135,6 @@ input[type="text"]:focus {
     color: var(--bg-primary);
 }
 
-/* Modals & Detail Cards */
 .dog-detail-card, .modal-content {
     background-color: var(--bg-card) !important;
     border: 1px solid rgba(52, 211, 153, 0.15);
@@ -151,9 +144,6 @@ input[type="text"]:focus {
     box-sizing: border-box;
 }
 
-/* Universal Responsive Grid System */
-
-/* Desktop & Large Screens (4 Columns) */
 .dog-grid, .grid-container {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -163,7 +153,6 @@ input[type="text"]:focus {
     box-sizing: border-box;
 }
 
-/* Tablets & Medium Screens (2 Columns) */
 @media (max-width: 1024px) {
     .dog-grid, .grid-container {
         grid-template-columns: repeat(2, 1fr) !important;
@@ -171,7 +160,6 @@ input[type="text"]:focus {
     }
 }
 
-/* Mobile Phones (1 Column + Stacked Details) */
 @media (max-width: 640px) {
     body {
         padding: 0.25rem;
@@ -188,7 +176,6 @@ input[type="text"]:focus {
         padding: 1rem;
     }
 
-    /* Detail card and text stack layout for mobile */
     .dog-detail-card, .modal-content, .card-details, div[class*="detail"] {
         display: flex !important;
         flex-direction: column !important;
