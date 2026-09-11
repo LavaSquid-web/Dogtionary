@@ -1,27 +1,33 @@
 :root {
-  --primary: #10b981;
-  --primary-hover: #059669;
-  --bg-dark: #0f172a;
-  --bg-card: #1e293b;
-  --text-main: #f8fafc;
-  --text-muted: #94a3b8;
-  --border: #334155;
-  --accent: #38bdf8;
-}
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+    --bg-primary: #0f172a;    /* Deep slate background */
+    --bg-card: #1e293b;       /* Rich card background */
+    --text-main: #f8fafc;     /* Crisp white text */
+    --text-muted: #94a3b8;    /* Soft gray for subtitles */
+    --accent-color: #38bdf8;  /* Vibrant vibrant cyan-blue accent */
 }
 
 body {
-  background-color: var(--bg-dark);
-  color: var(--text-main);
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+    background-color: var(--bg-primary) !important;
+    color: var(--text-main) !important;
+    font-family: system-ui, -apple-system, sans-serif;
+}
+
+/* Card and Modal Polish */
+.dog-card, .dog-detail-card, .modal-content {
+    background-color: var(--bg-card) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+}
+
+/* Search Bar Enhancement */
+input[type="text"], .search-input {
+    background-color: #1e293b !important;
+    color: var(--text-main) !important;
+    border: 1px solid #334155 !important;
+}
+
+input[type="text"]::placeholder {
+    color: var(--text-muted);
 }
 
 /* Navbar */
