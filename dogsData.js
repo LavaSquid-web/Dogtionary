@@ -178,8 +178,19 @@ const dogsData = [
     lifespan: "12 - 14 years",
     temperament: "Friendly, Gentle, Adaptable, Alert",
     weight: "20 - 30 kg"
-  }
-  document.addEventListener('DOMContentLoaded', () => {
+  },
+  {
+    name: "Boston Terrier",
+    description: "The Boston Terrier has a highly affectionate, lively, and intelligent temperament...",
+     image: "https://www.borrowmydoggy.com/_next/image?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2F4ij0poqn%2Fproduction%2F4f3e155a1fba0441792217ab17a6ac679bd3a7d0-800x600.jpg&w=640&q=80",
+    origin: "Boston, Massachusetts",
+    lifespan: "11 - 13 years",
+    temperament: "Deeply loyal, and exceptional family companions",
+    weight: "4.5 - 11.3 kg"
+  },
+];
+
+document.addEventListener('DOMContentLoaded', () => {
   const dogGrid = document.getElementById('dogGrid');
   const searchInput = document.getElementById('searchInput');
   const dogModal = document.getElementById('dogModal');
@@ -246,8 +257,8 @@ const dogsData = [
   }
 
   renderCards(dogsData);
-});
-];
+},
+);
 document.addEventListener('DOMContentLoaded', () => {
   const dogGrid = document.getElementById('dogGrid');
   const searchInput = document.getElementById('searchInput');
@@ -255,6 +266,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const modalContent = document.getElementById('modalContent');
   const closeModal = document.getElementById('closeModal');
   const breedCount = document.getElementById('breedCount');
+  
 
   function renderCards(dogs) {
     if (!dogGrid) return;
